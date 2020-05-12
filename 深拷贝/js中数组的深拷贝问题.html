@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>深拷贝问题</title>
+</head>
+<body>
+<script>
+    /*
+    * 拷贝分为深拷贝和浅拷贝，对于不同的数据类型，在拷贝的时候对应不同的操作
+    * 基本类型的拷贝就是简单的赋值运算
+    * 对于引用类型的拷贝，要使用递归算法，直到拷贝的类型不是引用类型为止
+    */
+    //1.简单类型的拷贝
+    // function copyEasyType(val) {
+    //     if (!isValue(val)){
+    //         return val
+    //     }
+    // }
+    //
+    // function isValue(value) {
+    //     let result=typeof value;
+    //     return value!==null&&(result=='object'||result=='function')
+    // }
+    //
+    // var number=copyEasyType('123');
+    // console.log(number);  //123
+    // console.log(typeof number)//string
+
+
+
+
+
+
+
+    /*引用类型的拷贝，需要使用递归遍历的方法，直到遍历的数据类型不是引用类型
+     * 对于引用类型的复制，又分为好几种复制方法
+     * 数组
+     * 函数
+     * 对象
+     * 特殊类型 Boolean、Date、Map、Number 等等
+     */
+    //对于数组的复制方法
+    /*
+     * 1.首先要先初始化一个长度和原来数组长度一样的数组
+     * 2.进行数组的赋值
+     */
+    function copyType(value) {
+        let result;
+
+        //如果是基本类型，就直接将数据返回过来
+        if (!isValue(value)){
+            return value;
+        }
+
+
+        //如果不是基本类型，判断是否是数组
+        var arr=Array.isArray(value);
+
+
+        //如果是数组，就对数组进行初始化
+        if (arr){
+            result=initCloneArray(value)
+        }
+
+
+        if (arr){
+            for (var i=0,len=value.length;i<len;i++){
+                //使用递归的方式，直到最后的数据的类型不再是引用类型
+                result[i]=copyType(value[i])
+            }
+        }
+
+        //最后将这个数组返回
+        return result;
+    }
+
+    const hasOwnProperty=Object.prototype.hasOwnProperty;
+
+    //数组的初始化
+    function initCloneArray(array) {
+        //这是数组的长度
+        const { length }=array;
+        //调用数组的构造函数，创建一个数组大小的新数组
+        const result=new array.constructor(length);
+
+        if (length && typeof array[0] =='string' && hasOwnProperty.call(array,'index')){
+            result.index=array.index;
+            result.input=array.input;
+        }
+        return result;
+    }
+
+
+    function isValue(value) {
+        let result=typeof value;
+        return value!==null&&(result=='object'||result=='function')
+    }
+
+    var arr=[1,2,3]
+    var arr1=copyType(arr);
+    console.log(arr1)
+</script>
+</body>
+</html>

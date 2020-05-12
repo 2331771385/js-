@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise的应用</title>
+</head>
+<body>
+<script>
+    /*
+    * promise的实例，可以通过promise的构造函数来实现,这个函数有两个参数，
+    * promise是解决异步编程的操作，在promise之前，解决异步函数都是采用回调函数和事件
+    * promise是一个容器，里面保存着某个未来才会结束的操作
+    * promise一旦创建就不能取消，因为promise实例一旦创建就会立即执行
+    * promise有一些特性：promise有3中状态：进行，完成，失败。
+    * 在promise实例中，只会有2中状态的改变，从进行到完成，这一步会执行resolve函数
+    * 另一种状态就是从进行到失败，这一步会执行reject函数
+    *
+    */
+    var promise=new Promise((resolve, reject) => {
+        /*
+        * if(异步操作成功){
+        * 状态从进行到完成
+        * 执行resolve
+        * }else{
+        * 状态从进行到失败
+        * 执行reject函数
+        * }
+        */
+    })
+
+
+    //对于一个函数的返回值是promise的实例,实现一个简单的例子
+    function timeOut(ms){
+        return new Promise((resolve, reject) => {
+            setTimeout(resolve,ms,'done')
+        })
+    }
+
+    //在调用了timeOut函数之后，不会立即执行这个then函数，而是会在6秒之后执行，
+    //过了指定的时间之后，promise的状态就会变为resolve，此时就会触发then方法绑定的回调函数
+    timeOut(6000).then(res=>{
+        console.log(res)
+    })
+
+
+
+
+
+</script>
+</body>
+</html>

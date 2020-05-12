@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise的执行过程</title>
+</head>
+<body>
+<script>
+    console.log('我是最先开始执行'); //1
+    var promise=new Promise((resolve, reject) => {
+        console.log('我是promise里面的');//2
+        resolve();//执行成功的回调函数
+        console.log('我是resolve后面的')//3
+    })
+    //在所有的都执行完毕之后，才会执行这个回调函数，很好的提现出来异步
+    promise.then(()=>{
+        console.log('我是promise执行体里面的函数')//5
+    })
+    console.log('我是最外面的')//4
+</script>
+</body>
+</html>

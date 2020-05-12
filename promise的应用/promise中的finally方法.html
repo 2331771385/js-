@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise方法中的finally</title>
+</head>
+<body>
+<script>
+    /*
+    * promise中的finally方法：即无论代码执行then还是catch方法，最后都会执行finally方法
+    * finally的回调函数没有参数，也就意味着finally的执行不依赖于promise
+    * 下面是一个案例
+    */
+    var promise=function () {
+        return new Promise((resolve, reject) => {
+            resolve('ok')
+        })
+    }
+
+    //即函数执行完then方法之后就会接着执行finally函数
+    promise().then(res=>{
+        console.log(res)
+    }).catch(err=>{
+        console.log(err)
+    }).finally(()=>{
+        console.log('这是finally函数')
+    })
+</script>
+</body>
+</html>

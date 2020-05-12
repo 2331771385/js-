@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise.all的使用</title>
+</head>
+<body>
+<script>
+    /*
+    * promise.all()方法的使用接受的是一个数组
+    * 如果参数不是一个数组，也应该是具有iterator接口
+    * const p=promise.all(p1,p2,p3);
+    * p的状态取决于p1,p2,p3
+    * 如果p1,p2,p3都是执行的resolve，那么p的状态执行的也是resolve函数
+    * 如果有一个promise实例执行的是reject函数，那么p最终执行的就是reject函数
+    */
+
+
+    //当所有的promise实例执行的是resolve函数的时候，
+    // var promise1=new Promise((resolve, reject) => {
+    //     resolve('ok')
+    // })
+    // var promise2=new Promise((resolve, reject) => {
+    //     resolve('that ok')
+    // })
+    //
+    // Promise
+    //     .all([promise1,promise2]).then(res=>{
+    //     console.log('这说明所有的promise实例执行的是resolve函数')
+    // })
+    //     .catch(err=>{
+    //         console.log(err)
+    //     })
+    //
+    //
+    // //当多个promise实例中含有一个实例执行reject函数的时候，那么Promise.all（）就会执行reject方法
+    // var p1=new Promise((resolve, reject) => {
+    //     reject('that error')
+    // })
+    // var p2=new Promise((resolve, reject) => {
+    //     resolve('ok')
+    // })
+    //
+    // Promise.all([p1,p2]).then(res=>{
+    //     console.log(res)
+    // }).catch(err=>{
+    //     console.log(err)
+    // })
+
+
+    //在Promise.all函数的参数中，都是promise的实例，如果有某一个实例中自身含有catch方法，那么就不会执行promise.all方法
+    var p=new Promise((resolve, reject) => {
+        resolve('这真的很好');
+    }).then(res=>{
+        console.log(res)
+    }).catch(err=>{
+        console.log(err)
+    })
+
+    var a=new Promise((resolve, reject) => {
+        throw new Error('server error')
+    }).then(res=>{
+        console.log(res)
+    }).catch(err=>{
+        console.log(err)
+    })
+
+    Promise.all([p,a]).then(res=>{
+        console.log('全部都是对的')
+    }).catch(err=>{
+        console.log('有错的')
+    })
+</script>
+</body>
+</html>

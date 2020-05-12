@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise的异常处理方法</title>
+</head>
+<body>
+<script>
+    // var promise=new Promise((resolve, reject) => {
+    //     //抛出异常，就会在promise实例的catch方法中显示出来
+    //     throw new Error('server error')
+    // })
+    // promise.catch(err=>{
+    //     console.log(err)
+    // })
+
+
+    //如果promise的状态已经发生改变，并且变为resolve了，之后再抛出异常就不会发挥作用了
+    var promise=new Promise((resolve, reject) => {
+        resolve('我已经完成了，在抛出异常就不会有效果了');
+        reject(new Error('server error'))
+    })
+    promise
+        .then(res=>{
+        console.log(res)
+    })
+        .catch(err=>{
+        console.log(err)
+    })
+</script>
+</body>
+</html>
