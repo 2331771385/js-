@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js中数组的深拷贝问题</title>
+</head>
+<body>
+<script>
+    /*
+    * 对于函数的拷贝，我们返回的是对象的引用
+    */
+    function copyFunction(value) {
+        let result;
+        //如果是基本类型，直接将值返回
+        if (!isValue(value)){
+            return value;
+        }
+        let arr=Array.isArray(value);
+        if (arr){
+            result=isCopyValue(value);
+        }else{
+            const isFun=typeof value==='function';
+            //判断是否是函数
+            if (isFun){
+                return value;
+            }
+        }
+
+        return result;
+    }
+
+
+    //数组的初始化
+    function isCopyValue(val) {
+        const { length }=val;
+        const result=new val.constructor(length);
+
+        return result;
+    }
+
+
+    //判断数据的类型
+    function isValue(value) {
+        let res=typeof value;
+        return value!=null&&(res=='object'||res=='function')
+    }
+
+
+    function f1() {
+        console.log('1111')
+    }
+    var a=copyFunction(f1);
+    console.log(a)
+</script>
+</body>
+</html>
