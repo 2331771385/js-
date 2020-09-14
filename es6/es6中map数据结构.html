@@ -2,9 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+<script>
+    /*
+    * es6中map数据结构的方法使用以及创建map结构
+    * 使用size属性可以计算出该map有多少个元素
+    * 创建map结构的三种方式
+    * 1.new Map()-set(key,value)
+    * 2.new Map().set(key,value).set(key,value)
+    * 3.new Map([[]];以二维数组的形式进行传递参数（key,value以二维数组的形式传递）
+    * */
+    var map1=new Map();
+    map1.set(60,'及格');
+    map1.set(80,'良好');
+    console.log(map1.size) //2
+
+    //因为new Map()返回的是当前Map,所以可以使用set直接创建map对象
+    var map2=new Map().set(69,'及格').set(78,'良好');
+    console.log(map2);//返回的是map对象
+    console.log(map2.size);//返回的是map对象的个数
+
+    var map3=new Map([[60,'及格'],[90,'优秀']]);
+    console.log(map3)
+
+
+
+    //对同一个map中同一个key进行赋值,后面的值会覆盖前面的值
+    map1.set(60,'良好');
+    console.log(map1)
+
+
+    /*map中key时基本数据类型，当基本数据类型的key===的时候，才可以说是同一个key
+    * 如果map中的key是引用类型，只有当key值指向的是同一地址，才可以说是同一个key
+    * */
+    var obj={};
+    var obj1=obj;
+    map1.set(obj,'这是对象obj关联的值');
+    map1.set(obj1,'这是obj1关联的值');
+    //get(key)返回对应的值，如果不存在该键，就返回一个undefined
+    console.log(map1.get(obj)===map1.get(obj1));//true，说明这属于同一个key
+
+    //判断该map对象中是否含有该键对应的值，如果有就返回true，否则为false
+    console.log(map1.has(60));//true
+    console.log(map1.has('60'));//false
+
+    //delete(key),如果该map中含有该键，删除并且返回true，否则返回false
+    console.log(map1)
+    console.log(map1.delete(60));//true
+    console.log(map1.delete('60'));//false,说明该map1对象中不存在该键
+    console.log(map1.size);//2,说明已经将元素删除掉。
+
+
+
+    /*
+    * map中的迭代方法
+    * 1.map1.keys()会迭代所有的键
+    * 2.map1.values()会迭代所有的值
+    * 3.map1.entries()会迭代所有的键值对
+    * */
+    console.log(map1.keys());
+    console.log(map1.values());
+    console.log(map1.entries());
+    /*
+    * 如果对于forEach（）方法，值传递一个参数，就会返回每一个map对象的值
+    * 如果传2个参数，就是key,value
+    * */
+    map1.forEach(item => {
+        console.log(item);
+    })
+    //使用for...of的方式遍历每一个map对象
+    for (let item of map1.entries()){
+        console.log(item)
+    }
+    //遍历所有的键
+    for (let itemKey of map1.keys()){
+        console.log(itemKey)
+    }
+    //遍历所有的值
+    for (let itemVal of map1.values()){
+        console.log(itemVal)
+    }
+</script>
 </body>
 </html>
